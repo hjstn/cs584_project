@@ -34,6 +34,6 @@ class LGaussianBlur(nn.Module):
         channels = x.size(1)
 
         kernel_2d = self.get_gaussian_kernel2d()
-        kernel = kernel_2d.expand((1, 1, -1, -1))
+        kernel = kernel_2d.expand((channels, 1, -1, -1))
 
         return F.conv2d(x, kernel, padding=self.padding, groups=channels)

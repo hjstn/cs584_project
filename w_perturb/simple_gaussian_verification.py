@@ -32,10 +32,10 @@ def mnist_model():
 
 model = mnist_model()
 # Optionally, load the pretrained weights.
-checkpoint = torch.load(
-    os.path.join(os.path.dirname(__file__), 'pretrained/mnist_a_adv.pth'),
-    map_location=torch.device('cpu'))
-model.load_state_dict(checkpoint)
+# checkpoint = torch.load(
+#     os.path.join(os.path.dirname(__file__), 'pretrained/mnist_a_adv.pth'),
+#     map_location=torch.device('cpu'))
+# model.load_state_dict(checkpoint)
 
 ## Step 2: Prepare dataset as usual
 test_data = torchvision.datasets.MNIST(
@@ -67,7 +67,7 @@ sigma_center, sigma_tensor = build_bounded_sigma(0.5, 4.0)
 
 augment_model = nn.Sequential(
     LGaussianBlur(kernel_size, sigma_tensor),
-    model,
+    # model,
 )
 
 ## Step 3: wrap model with auto_LiRPA
