@@ -66,8 +66,8 @@ kernel_size = 11
 sigma_center, sigma_tensor = build_bounded_sigma(0.5, 4.0)
 
 augment_model = nn.Sequential(
-    LGaussianBlur(kernel_size, sigma_tensor),
-    # model,
+    LGaussianBlur(image.size(1), kernel_size, sigma_tensor),
+    model,
 )
 
 ## Step 3: wrap model with auto_LiRPA

@@ -4,8 +4,10 @@ import torch.nn.functional as F
 
 
 class LGaussianBlur(nn.Module):
-    def __init__(self, kernel_size: int, sigma: torch.Tensor):
+    def __init__(self, channels: int, kernel_size: int, sigma: torch.Tensor):
         super().__init__()
+
+        self.channels = channels
 
         self.kernel_size = kernel_size
         self.padding = kernel_size // 2
@@ -31,9 +33,7 @@ class LGaussianBlur(nn.Module):
         return kernel_1d.unsqueeze(-1) @ kernel_1d.unsqueeze(-2)
 
     def forward(self, x, *args):
-        channels = x.size(1)
-
         kernel_2d = self.get_gaussian_kernel2d()
-        kernel = kernel_2d.expand((channels, 1, -1, -1))
+        kernel = kernel_2d.expand((self.channels, 1, -1, -1))
 
-        return F.conv2d(x, kernel, padding=self.padding, groups=channels)
+        return F.conv2d(x, kernel, padding=self.padding, groups=self.channels)

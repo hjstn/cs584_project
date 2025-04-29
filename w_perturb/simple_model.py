@@ -34,7 +34,7 @@ kernel_size = 11
 sigma_center, sigma_tensor = build_bounded_sigma(0.5, 2.0)
 
 model = nn.Sequential(
-    LGaussianBlur(kernel_size, sigma_tensor),
+    LGaussianBlur(image.size(1), kernel_size, sigma_tensor),
 )
 
 lirpa_model = BoundedModule(
